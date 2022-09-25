@@ -1,0 +1,39 @@
+{
+  "name": "mmc-quant-trade",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanycw/mmc-quant-trade.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryanycw/mmc-quant-trade/issues"
+  },
+  "homepage": "https://github.com/ryanycw/mmc-quant-trade#readme",
+  "dependencies": {
+    "node-fetch": "2.6.1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.104",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/crypto-js": "^4.1.1",
+    "@types/node": "^18.7.17",
+    "@types/node-fetch": "2.x",
+    "@types/qs": "^6.9.7",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.2",
+    "qs": "^6.11.0",
+    "serverless": "^3.22.0",
+    "serverless-dotenv-plugin": "^4.0.2",
+    "serverless-plugin-typescript": "^2.1.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3"
+  }
+}
