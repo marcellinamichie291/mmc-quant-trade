@@ -11,6 +11,18 @@
         "fiat": {
             "baseURL": "https://api.binance.com",
             "testOrder": "/api/v3/order/test"
+        },
+        "utils": {
+            "baseURL": "https://api.binance.com",
+            "time": "/api/v3/time"
+        }
+    },
+    "wss": {
+        "uFuture": {
+            "singleBaseURL": "wss://fstream.binance.com/ws",
+            "combBaseURL": "wss://fstream.binance.com/stream?streams=",
+            "compositeIndex": "@compositeIndex",
+            "markPrice1Sec": "@markPrice@1s"
         }
     },
     "parameter": {

@@ -1,0 +1,20 @@
+{
+    "api": {
+        "derivatives": {
+            "baseURLTest": "https://api-testnet.bybit.com",
+            "order": "/contract/v3/private/order/create"
+        },
+        "utils": {
+            "baseURLTest": "https://api-testnet.bybit.com",
+            "time": "/v3/public/time"
+        }
+    },
+    "wss": {
+        "derivatives": {
+        }
+    },
+    "parameter": {
+        "defaultOrderSize": 1,
+        "recvWindow": "5000"
+    }
+}
