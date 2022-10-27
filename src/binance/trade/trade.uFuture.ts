@@ -58,7 +58,8 @@ export async function marketOrderTradeTest
     const keySig = await utils.buildSig(key, qs.stringify(traderOrder, { skipNulls: true }));
     const requestURL = await generateReqURL(baseURL, traderOrder, keySig.toString());
 
-    await generalTradeTest(requestURL, key.userKey);
+    const result = await generalTradeTest(requestURL, key.userKey);
+    return result
 }
 
 export async function stopOrderTradeTest() {

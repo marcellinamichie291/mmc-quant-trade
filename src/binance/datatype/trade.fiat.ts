@@ -17,6 +17,33 @@ export type tradeOrderInfo = {
     timestamp: number;
 }
 
+export type tradeOrderReceipt = {
+    symbol: string,
+    orderId: number,
+    orderListId: number,
+    clientOrderId: string,
+    transactTime: number,
+    price: string,
+    origQty: string,
+    executedQty: string,
+    cummulativeQuoteQty: string,
+    status: string,
+    timeInForce: string,
+    type: string,
+    side: string,
+    strategyId: number,
+    strategyType: number,
+    fills: sigleOrder[]
+}
+
+export type sigleOrder = {
+    price: string,
+    qty: string,
+    commission: string,
+    commissionAsset: string,
+    tradeId: number
+}
+
 export enum side {
     SELL = "SELL", 
     BUY = "BUY"

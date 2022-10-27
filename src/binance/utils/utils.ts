@@ -1,3 +1,4 @@
+import config from "./../../../json/binance.config.json";
 import * as datatype from "../datatype";
 import fetch from 'node-fetch';
 import { HmacSHA256, SHA256, enc } from 'crypto-js';
@@ -8,8 +9,7 @@ export async function buildSig(inputKeys: datatype.account.keyInfo, data: any) {
 }
 
 export async function fetchTime() {
-    const baseURL = "https://api.binance.com/api/v3/time";
-    const requestURL = baseURL;
+    const requestURL = `${config.api.utils.baseURL}${config.api.utils.time}`;
 
     const response = await fetch(requestURL);
     const result = await response.json();
