@@ -1,13 +1,17 @@
 org: ryanycw
-app: mmc
-service: footballArb
+app: mmc-quant
+service: ${env:SERVERLESS_SERVICE_NAME}
 frameworkVersion: "3"
 useDotenv: true
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-dotenv-plugin
 
 provider:
   name: aws
   runtime: nodejs14.x
-  # stage: dev
+  stage: dev
   region: ${env:AWS_REGION_MMC}
   profile: ${env:AWS_PROFILE_MMC} # profile of your aws credentials
   memorySize: 512 # optional, in MB, default is 1024
@@ -26,43 +30,13 @@ provider:
             - dynamodb:PutItem
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
+            - lambda:InvokeFunction
+            - lambda:InvokeAsync
           Resource:
-            - "arn:aws:dynamodb:${aws:region}:*:table/${env:AWS_DYNAMODB_TABLE_NAME_FOOTBALL}"
+            - "arn:aws:dynamodb:${aws:region}:*:table/${env:AWS_DYNAMODB_TABLE_NAME_ORDER}"
 
 functions:
-  # Premium API
-  fetchPremium:
-    name: ${self:service}-fetchPremium
-    handler: scripts/aws/lambda/fetchPremium.fetchPremium
-    events:
-      - httpApi:
-          path: /football/premium
-          method: get
-  # Trade API
-  exeOrder:
-    name: ${self:service}-exeOrder
-    handler: scripts/aws/lambda/exeOrder.exeOrder
-    events:
-      - httpApi:
-          path: /football/order
-          method: post
+  - ${file(serverless/tradingView/binance/execOrder.yml)}
 
 resources:
-  Resources:
-    # DB scheme
-    FootballArb:
-      Type: "AWS::DynamoDB::Table"
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: timestamp
-            AttributeType: N
-        KeySchema:
-          - AttributeName: timestamp
-            KeyType: HASH
-        BillingMode: PAY_PER_REQUEST
-        TableName: ${env:AWS_DYNAMODB_TABLE_NAME_FOOTBALL}
-
-plugins:
-  - serverless-plugin-typescript
-  - serverless-dotenv-plugin
+  - ${file(serverless/tradingView/binance/resource.yml)}
