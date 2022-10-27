@@ -1,0 +1,8 @@
+# Trade API
+exeOrder:
+  name: ${env:SERVERLESS_SERVICE_NAME}-${env:STAGE}-exeOrder
+  handler: src/aws/lambda/tradingView/binance/execOrder.exeOrder
+  events:
+  - httpApi:
+      path: /tradingview/exec
+      method: post

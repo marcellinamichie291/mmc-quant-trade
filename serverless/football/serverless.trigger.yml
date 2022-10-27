@@ -1,0 +1,37 @@
+stepFunctions:
+  stateMachines:
+    triggerFetchPremium:
+      name: ${self:service}-${opt:stage}-triggerFetchPremium
+      events:
+        - schedule: rate(1 minute)
+      definition:
+        Comment: "Trigger lambda function 6 times, 10 seconds apart in every 1 minute."
+        StartAt: CONFIGURE_COUNT
+        States:
+          CONFIGURE_COUNT:
+            Type: Pass
+            Result: {
+              "index": 0,
+              "count": 6
+            },
+            ResultPath: "$.iterator"
+            Next: ITERATOR
+          ITERATOR:
+            Type: Task
+            Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-fetchPremium
+            ResultPath: "$.iterator"
+            Next: IS_COUNT_REACHED
+          IS_COUNT_REACHED:
+            Type: Choice
+            Choices:
+            - Variable: "$.iterator.continue"
+              BooleanEquals: true
+              Next: WAIT
+            Default: DONE
+          WAIT:
+            Type: Wait
+            Seconds: 1
+            Next: ITERATOR
+          DONE:
+            Type: Pass,
+            End: true

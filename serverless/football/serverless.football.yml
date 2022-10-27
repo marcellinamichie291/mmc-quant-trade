@@ -1,0 +1,84 @@
+org: ryanycw
+app: mmc-quant
+service: ${env:SERVERLESS_SERVICE_NAME}
+frameworkVersion: "3"
+useDotenv: true
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-dotenv-plugin
+  - serverless-step-functions
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: ${env:AWS_REGION_MMC}
+  profile: ${env:AWS_PROFILE_MMC} # profile of your aws credentials
+  memorySize: 128 # optional, in MB, default is 1024
+  timeout: 29 # optional, in seconds, default is 6
+  environment:
+  httpApi:
+    cors: true
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - lambda:InvokeFunction
+            - lambda:InvokeAsync
+          Resource:
+            - "arn:aws:dynamodb:${aws:region}:*:table/${env:AWS_DYNAMODB_TABLE_NAME_FOOTBALLPREMIUM}"
+            - "arn:aws:dynamodb:${aws:region}:*:table/${env:AWS_DYNAMODB_TABLE_NAME_FOOTBALLORDER}"
+            - "arn:aws:lambda:${aws:region}:*:function:${env:SERVERLESS_SERVICE_NAME}-${env:STAGE}-exeOrder"
+
+functions:
+  # Premium API
+  fetchPremium:
+    name: ${env:SERVERLESS_SERVICE_NAME}-${env:STAGE}-fetchPremium
+    handler: src/aws/lambda/fetchPremium.fetchPremium
+    events:
+      - schedule: cron(0/1 * * * ? *)
+      - httpApi:
+          path: /football/premium
+          method: get
+  # Trade API
+  exeOrder:
+    name: ${env:SERVERLESS_SERVICE_NAME}-${env:STAGE}-exeOrder
+    handler: src/aws/lambda/exeOrder.exeOrder
+
+resources:
+  Resources:
+    # Premium DB Scheme
+    FootballArbPremium:
+      Type: "AWS::DynamoDB::Table"
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: timestamp
+            AttributeType: N
+        KeySchema:
+          - AttributeName: timestamp
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${env:AWS_DYNAMODB_TABLE_NAME_FOOTBALLPREMIUM}
+    # Order DB Scheme
+    FootballArbOrder:
+      Type: "AWS::DynamoDB::Table"
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: orderId
+            AttributeType: N
+        KeySchema:
+          - AttributeName: orderId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${env:AWS_DYNAMODB_TABLE_NAME_FOOTBALLORDER}
+
