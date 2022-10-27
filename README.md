@@ -15,7 +15,7 @@
 |-------------|----|----|----|
 | symbol | STRING | Y | 合約名稱中要有"-"，如BTC-USDT (BingX) |
 | side | ENUM | Y | SELL/BUY <br> Bid/Ask 買/賣 (BingX) |
-| <ul><li> type (Binance) </li> <li> orderType (Bybit/Bitget) </li> <li> tradeType (BingX) </li> <li> order_type (WooX) </li> <ul> | ENUM | Y | <ul><li> 訂單類型 LIMIT, MARKET, STOP, TAKE_PROFIT, STOP_MARKET, TAKE_PROFIT_MARKET, TRAILING_STOP_MARKET (Binance) </li><li> Order type limit/market (Bitget) </li> <li> Market/Limit  市價/現價 (BingX) </li> <li> LIMIT/MARKET/IOC/FOK/POST_ONLY/ASK/BID </li> <ul>|
+| <ul><li> type(Binance) </li> <li> orderType(Bybit/Bitget) </li> <li> tradeType(BingX) </li> <li> order_type (WooX) </li> <ul> | ENUM | Y | <ul><li> 訂單類型 LIMIT, MARKET, STOP, TAKE_PROFIT, STOP_MARKET, TAKE_PROFIT_MARKET, TRAILING_STOP_MARKET (Binance) </li><li> Order type limit/market (Bitget) </li> <li> Market/Limit  市價/現價 (BingX) </li> <li> LIMIT/MARKET/IOC/FOK/POST_ONLY/ASK/BID </li> <ul>|
 
 |  | ENUM | Y |  |
 
