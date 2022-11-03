@@ -1,0 +1,18 @@
+{
+    "binance": {
+        "uFuture": {
+            "singleBaseURL": "wss://fstream.binance.com/ws",
+            "combBaseURL": "wss://fstream.binance.com/stream?streams=",
+            "compositeIndex": "@compositeIndex",
+            "markPrice1Sec": "@markPrice@1s"
+        }
+    },
+    "bybit": {
+    },
+    "bitget": {
+    },
+    "bingx": {
+    },
+    "woox": {
+    }
+}

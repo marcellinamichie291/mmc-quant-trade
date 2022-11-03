@@ -1,0 +1,15 @@
+{
+    "binance": {
+        "defaultOrderSize": 1,
+        "recvWindow": "60000"
+    },
+    "bybit": {
+        "recvWindow": "60000"
+    },
+    "bitget": {
+    },
+    "bingx": {
+    },
+    "woox": {
+    }
+}

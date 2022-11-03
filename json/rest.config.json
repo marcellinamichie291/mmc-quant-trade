@@ -1,0 +1,49 @@
+{
+    "binance": {
+        "baseURL": "https://api.binance.com",
+        "baseFURL": "https://fapi.binance.com",
+        "uFuture": {
+            "accountInfo": "/fapi/v2/account",
+            "indexInfo": "/fapi/v1/indexInfo",
+            "premiumIndexInfo": "/fapi/v1/premiumIndex",
+            "mulAssetIndex": "/fapi/v1/assetIndex",
+            "orderTest": "/fapi/v1/order/test"
+        },
+        "fiat": {
+            "orderTest": "/api/v3/order/test"
+        },
+        "utils": {
+            "time": "/api/v3/time"
+        }
+    },
+    "bybit": {
+        "baseURLTest": "https://api-testnet.bybit.com",
+        "futures": {
+            "order": "/contract/v3/private/order/create"
+        },
+        "utils": {
+            "time": "/v3/public/time"
+        }
+    },
+    "bitget": {
+        "baseURL": "https://api.bitget.com",
+        "futures": {
+            "order": "/api/mix/v1/order/placeOrder"
+        }
+    },
+    "bingx": {
+        "baseURL": "https://api-swap-rest.bingbon.pro",
+        "futures": {
+            "order": "/api/v1/user/trade"
+        },        
+        "utils": {
+            "time": "/api/v1/common/server/time"
+        }
+    },
+    "woox": {
+        "baseURL": "https://api.woo.org/",
+        "futures": {
+            "order": "/v1/order"
+        }
+    }
+}

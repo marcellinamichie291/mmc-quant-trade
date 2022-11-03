@@ -2,22 +2,27 @@
 
 ### Trade API Parameters List
 
-#### [Binance](#binance)
-#### [Bybit](#bybit)
-#### [Bitget](#bitget)
-#### [BingX](#bingx)
-#### [WooX](#woox)
+#### [Todo List](#todo-list-1)
+#### [Common Params](#common-parameters-1)
+#### [Binance](#binance-1)
+#### [Bybit](#bybit-1)
+#### [Bitget](#bitget-1)
+#### [BingX](#bingx-1)
+#### [WooX](#woox-1)
 
 ---
 
-#### [Common Parameters]
+#### Todo List
+* Optimize generate URL
+* Fix account/ fiat/
+* Database -> Price, Amount, CEX, Type
+
+#### Common Parameters
 | Parameters | Type | Required | Description |
 |-------------|----|----|----|
 | symbol | STRING | Y | 合約名稱中要有"-"，如BTC-USDT (BingX) |
-| side | ENUM | Y | SELL/BUY <br> Bid/Ask 買/賣 (BingX) |
-| <ul><li> type(Binance) </li> <li> orderType(Bybit/Bitget) </li> <li> tradeType(BingX) </li> <li> order_type (WooX) </li> <ul> | ENUM | Y | <ul><li> 訂單類型 LIMIT, MARKET, STOP, TAKE_PROFIT, STOP_MARKET, TAKE_PROFIT_MARKET, TRAILING_STOP_MARKET (Binance) </li><li> Order type limit/market (Bitget) </li> <li> Market/Limit  市價/現價 (BingX) </li> <li> LIMIT/MARKET/IOC/FOK/POST_ONLY/ASK/BID </li> <ul>|
-
-|  | ENUM | Y |  |
+| side | ENUM | Y | <ul><li> SELL/BUY </li> <li> Bid/Ask 買/賣 (BingX) </li> <li> open_long, open_short, close_long, close_short(Bitget) </li><ul> |
+| <ul><li> type(Binance) </li> <li> orderType(Bybit/Bitget) </li> <li> tradeType(BingX) </li> <li> order_type (WooX) </li> <ul> | ENUM | Y | <ul><li> 訂單類型 LIMIT, MARKET, STOP, TAKE_PROFIT, STOP_MARKET, TAKE_PROFIT_MARKET, TRAILING_STOP_MARKET (Binance) </li><li> Order type limit/market (Bitget) </li> <li> Market/Limit  市價/現價 (BingX) </li> <li> LIMIT/MARKET/IOC/FOK/POST_ONLY/ASK/BID (WooX) </li> <ul>|
 
 #### [Binance](https://binance-docs.github.io/apidocs/futures/cn/#trade-3)
 | Parameters | Type  | Required | Description |
@@ -36,7 +41,6 @@
 | priceProtect | STRING | N | 条件单触发保护："TRUE","FALSE", 默认"FALSE". 仅 STOP, STOP_MARKET, TAKE_PROFIT, TAKE_PROFIT_MARKET 需要此参数 |
 | newOrderRespType | ENUM | N | "ACK", "RESULT", 默认 "ACK" |
 | recvWindow | LONG | N |
-| timestamp | LONG | Y |
 #### [Bybit](https://bybit-exchange.github.io/docs/zh-my/derivativesV3/contract/#t-errors)
 | Parameters | Type  | Required | Description |
 | ------------- |----|----|----|
@@ -57,10 +61,13 @@
 ####  [Bitget](https://bitgetlimited.github.io/apidoc/en/spot/#place-order)
 | Parameters | Type  | Required | Description |
 | ------------- |----|----|----|
-| force | STRING | Y | force |
-| price | STRING | N | Limit pricing, null if orderType is market |
-| quantity | STRING | Y | Order quantity, base coin |
-| clientOrderId | STRING | N | Custom id length: 40 |
+| marginCoin | STRING | Y | Margin currency |
+| size | STRING | Y | Order quantity |
+| price | STRING | N | Order price (not required at market price) |
+| timeInForceValue | STRING | N | Time in force: <ul> <li> default value: normal good till cancel </li> <li> post_only: maker only </li> <li> fok: fill or kill </li> <li> ioc: immediately or cancel </li> |
+| clientOid | STRING | N | Unique client order ID, The idempotent is promised but only within 24 hours |
+| presetTakeProfitPrice | STRING | N | Preset take profit price |
+| presetStopLossPrice | STRING | N | Preset stop loss price |
 
 ####  [BingX](https://github.com/BingX-API/BingX-swap-api-doc/blob/master/%E4%B8%93%E4%B8%9A%E5%90%88%E7%BA%A6API%E6%8E%A5%E5%8F%A3.md?plain=1)
 | Parameters | Type  | Required | Description |
@@ -87,3 +94,6 @@
 ### Resource
 - [Serverless Step Functions Example](https://github.com/rpidanny/Nietzsche/blob/master/serverless.yml)
 - [Bybit API Trade Example](https://github.com/bybit-exchange/api-usage-examples/blob/master/V3_demo/api_demo/contract/Encryption.js)
+- [Bitget API Example](https://github.com/BitgetLimited/v3-bitget-api-sdk/tree/master/bitget-node-sdk-api)
+- [BingX API Example](https://github.com/BingX-API/BingX-swap-api-doc/tree/master/demo/postman)
+- [qs with Sort](https://github.com/ljharb/qs)

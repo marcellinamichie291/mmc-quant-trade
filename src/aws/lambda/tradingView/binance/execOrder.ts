@@ -81,7 +81,7 @@ const trade = async (data: {fiatSide: string, uFutureSide: string, uFuturePositi
 export const exeOrder = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-  console.log(event);
+  console.log(JSON.parse(event.body));
 
   // update function
   try {
